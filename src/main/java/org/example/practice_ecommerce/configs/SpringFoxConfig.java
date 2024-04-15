@@ -33,16 +33,16 @@ public class SpringFoxConfig {
                         .contact(new Contact().email("contact@example.com")))
                 .servers(Collections.singletonList
                         (new Server().url(serverURL).description(serverName))
-                );
-//                .components(
-//                        new Components()
-//                                .addSecuritySchemes(
-//                                        "bearerAuth",
-//                                        new SecurityScheme()
-//                                                .type(SecurityScheme.Type.HTTP)
-//                                                .scheme("bearer")
-//                                                .bearerFormat("JWT")))
-//                .security(Collections.singletonList(new SecurityRequirement().addList("bearerAuth")));
+                )
+                .components(
+                        new Components()
+                                .addSecuritySchemes(
+                                        "bearerAuth",
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")))
+                .security(Collections.singletonList(new SecurityRequirement().addList("bearerAuth")));
     }
 
     @Bean

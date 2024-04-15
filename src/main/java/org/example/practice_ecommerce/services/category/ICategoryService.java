@@ -11,8 +11,11 @@ public interface ICategoryService {
     Category getCategoryById(Integer id);
 
     void deleteCategoryById(Integer id);
-
     Category createCategory(CategoryDTO category);
 
     Category activeAndDeactiveCategory(Integer id);
+
+    Category updateCategory(Integer id, CategoryDTO category);
+
+    List<Category> getAllCategoriesByStatus(Boolean active);
 }

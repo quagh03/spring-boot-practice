@@ -12,12 +12,11 @@ import org.example.practice_ecommerce.dtos.responses.ApiResponse.SuccessResponse
 import org.example.practice_ecommerce.entities.Category;
 import org.example.practice_ecommerce.services.category.CategoryService;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Category")
+@Tag(name = "Category", description = "Category API")
 @RestController
 @RequestMapping("${api.prefix}/categories")
 @RequiredArgsConstructor
@@ -56,6 +55,19 @@ public class CategoryController {
 
         String responseMessage = category.getIsActive() ? "Category activated successfully" : "Category deactivated successfully";
 
-        return ResponseFactory.createResponse(true,201, responseMessage);
+        return ResponseFactory.createResponse(true,204, responseMessage);
+    }
+
+    @Operation(summary = "Update category", description = "Update category")
+    @PutMapping("/{id}")
+    public SuccessResponse<Category> updateCategory(@Min(1) @PathVariable Integer id, @Valid @RequestBody CategoryDTO category) {
+        Category updatedCategory = categoryService.updateCategory(id, category);
+        return ResponseFactory.createSuccessResponse(200, "Category updated successfully", updatedCategory);
+    }
+
+    @Operation(summary = "Get all categories by activation status", description = "Get all categories by activation status")
+    @GetMapping("/status")
+    public SuccessResponse<List<Category>> getAllCategoriesByStatus(@RequestParam("active") Boolean active) {
+        return ResponseFactory.createSuccessResponse(200,"Success",categoryService.getAllCategoriesByStatus(active));
     }
 }

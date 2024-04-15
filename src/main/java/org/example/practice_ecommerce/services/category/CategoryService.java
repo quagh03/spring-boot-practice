@@ -56,4 +56,21 @@ public class CategoryService implements ICategoryService{
         foundCategory.setIsActive(!foundCategory.getIsActive());
         return categoryRepository.save(foundCategory);
     }
+
+    @Override
+    @Transactional
+    public Category updateCategory(Integer id, CategoryDTO category) {
+        Category foundCategory = getCategoryById(id);
+        mapper.map(category, foundCategory);
+        return categoryRepository.save(foundCategory);
+    }
+
+    @Override
+    public List<Category> getAllCategoriesByStatus(Boolean active) {
+        if(active) {
+            return categoryRepository.findAllByIsActiveTrue();
+        } else {
+            return categoryRepository.findAllByIsActiveFalse();
+        }
+    }
 }
